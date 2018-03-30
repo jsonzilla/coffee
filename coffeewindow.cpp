@@ -1,5 +1,5 @@
-#include "bookwindow.h"
-#include "bookdelegate.h"
+#include "coffeewindow.h"
+#include "coffeedelegate.h"
 #include "initdb.h"
 
 #include <QtSql>
@@ -21,7 +21,7 @@ BookWindow::BookWindow()
   }
 
   // Create the data model
-  model = new QSqlRelationalTableModel(ui.bookTable);
+  model = new QSqlRelationalTableModel(ui.brewTable);
   model->setEditStrategy(QSqlTableModel::OnManualSubmit);
   model->setTable("books");
 
@@ -47,10 +47,10 @@ BookWindow::BookWindow()
   }
 
   // Set the model and hide the ID column
-  ui.bookTable->setModel(model);
-  ui.bookTable->setItemDelegate(new CoffeeDelegate(ui.bookTable));
-  ui.bookTable->setColumnHidden(model->fieldIndex("id"), true);
-  ui.bookTable->setSelectionMode(QAbstractItemView::SingleSelection);
+  ui.brewTable->setModel(model);
+  ui.brewTable->setItemDelegate(new CoffeeDelegate(ui.brewTable));
+  ui.brewTable->setColumnHidden(model->fieldIndex("id"), true);
+  ui.brewTable->setSelectionMode(QAbstractItemView::SingleSelection);
 
   // Initialize the Author combo box
   ui.authorEdit->setModel(model->relationModel(authorIdx));
@@ -68,10 +68,10 @@ BookWindow::BookWindow()
   mapper->addMapping(ui.genreEdit, genreIdx);
   mapper->addMapping(ui.ratingEdit, model->fieldIndex("rating"));
 
-  connect(ui.bookTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
+  connect(ui.brewTable->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)),
           mapper, SLOT(setCurrentModelIndex(QModelIndex)));
 
-  ui.bookTable->setCurrentIndex(model->index(0, 0));
+  ui.brewTable->setCurrentIndex(model->index(0, 0));
 }
 
 /***************************************************************************/

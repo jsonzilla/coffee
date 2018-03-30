@@ -5,7 +5,7 @@
 
 /***************************************************************************/
 
-void addBook(
+void addBrew(
     QSqlQuery &q,
     const QString &title,
     int year,
@@ -85,19 +85,19 @@ QSqlError initDb()
 
   if (!q.prepare(QLatin1String("insert into books(title, year, author, genre, rating) values(?, ?, ?, ?, ?)")))
     return q.lastError();
-  addBook(q, QLatin1String("Foundation"), 1951, asimovId, sfiction, 3);
-  addBook(q, QLatin1String("Foundation and Empire"), 1952, asimovId, sfiction, 4);
-  addBook(q, QLatin1String("Second Foundation"), 1953, asimovId, sfiction, 3);
-  addBook(q, QLatin1String("Foundation's Edge"), 1982, asimovId, sfiction, 3);
-  addBook(q, QLatin1String("Foundation and Earth"), 1986, asimovId, sfiction, 4);
-  addBook(q, QLatin1String("Prelude to Foundation"), 1988, asimovId, sfiction, 3);
-  addBook(q, QLatin1String("Forward the Foundation"), 1993, asimovId, sfiction, 3);
-  addBook(q, QLatin1String("The Power and the Glory"), 1940, greeneId, fiction, 4);
-  addBook(q, QLatin1String("The Third Man"), 1950, greeneId, fiction, 5);
-  addBook(q, QLatin1String("Our Man in Havana"), 1958, greeneId, fiction, 4);
-  addBook(q, QLatin1String("Guards! Guards!"), 1989, pratchettId, fantasy, 3);
-  addBook(q, QLatin1String("Night Watch"), 2002, pratchettId, fantasy, 3);
-  addBook(q, QLatin1String("Going Postal"), 2004, pratchettId, fantasy, 3);
+  addBrew(q, QLatin1String("Foundation"), 1951, asimovId, sfiction, 3);
+  addBrew(q, QLatin1String("Foundation and Empire"), 1952, asimovId, sfiction, 4);
+  addBrew(q, QLatin1String("Second Foundation"), 1953, asimovId, sfiction, 3);
+  addBrew(q, QLatin1String("Foundation's Edge"), 1982, asimovId, sfiction, 3);
+  addBrew(q, QLatin1String("Foundation and Earth"), 1986, asimovId, sfiction, 4);
+  addBrew(q, QLatin1String("Prelude to Foundation"), 1988, asimovId, sfiction, 3);
+  addBrew(q, QLatin1String("Forward the Foundation"), 1993, asimovId, sfiction, 3);
+  addBrew(q, QLatin1String("The Power and the Glory"), 1940, greeneId, fiction, 4);
+  addBrew(q, QLatin1String("The Third Man"), 1950, greeneId, fiction, 5);
+  addBrew(q, QLatin1String("Our Man in Havana"), 1958, greeneId, fiction, 4);
+  addBrew(q, QLatin1String("Guards! Guards!"), 1989, pratchettId, fantasy, 3);
+  addBrew(q, QLatin1String("Night Watch"), 2002, pratchettId, fantasy, 3);
+  addBrew(q, QLatin1String("Going Postal"), 2004, pratchettId, fantasy, 3);
 
   return QSqlError();
 }

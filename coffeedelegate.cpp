@@ -1,4 +1,4 @@
-#include "bookdelegate.h"
+#include "coffeedelegate.h"
 
 #include <QtWidgets>
 
@@ -7,7 +7,8 @@
 CoffeeDelegate::CoffeeDelegate(
     QObject *parent
     )
-  : QSqlRelationalDelegate(parent), star(QPixmap(":images/star.png"))
+  : QSqlRelationalDelegate(parent),
+    star(QPixmap(":images/star.png"))
 {
 }
 
