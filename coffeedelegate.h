@@ -9,6 +9,11 @@
 /***************************************************************************/
 QT_FORWARD_DECLARE_CLASS(QPainter)
 /***************************************************************************/
+class QPainter;
+class QStyleOptionViewItem;
+class QModelIndex;
+/***************************************************************************/
+
 class CoffeeDelegate : public QSqlRelationalDelegate
 {
   public:

@@ -8,21 +8,28 @@
 
 /***************************************************************************/
 
-class BookWindow: public QMainWindow
+class CoffeeWindow: public QMainWindow
 {
     Q_OBJECT
   public:
-    BookWindow();
+    CoffeeWindow();
 
   private:
     void showError(
         const QSqlError &err
         );
 
+    bool InitializeDatabase();
+    void CreateDataModel();
+    void InitializeComboBoxes();
+    bool PopulateModel();
+    void SetModel();
+    void HideIdColum();
+
     Ui::BookWindow ui;
     QSqlRelationalTableModel *model = nullptr;
-    int authorIdx;
-    int genreIdx;
+    int methodIdx;
+    int groundIdx;
 };
 
 /***************************************************************************/

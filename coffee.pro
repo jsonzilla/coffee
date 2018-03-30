@@ -14,5 +14,5 @@ FORMS       = \
 
 QT += sql widgets widgets
 
-target.path = $$[QT_INSTALL_EXAMPLES]/sql/books
+target.path = ./build
 INSTALLS += target
