@@ -118,8 +118,7 @@ void CoffeeWindow::MapBrewForm(
   mapper->addMapping(ui.ratioEdit, brewModel->fieldIndex("ratio"));
 
   //connect button to tab timer
-  const int tabTimer = 3;
-  connect(ui.timerButton, &QPushButton::clicked, [this](){ui.mainTabs->setCurrentIndex(tabTimer);} );
+  connect(ui.timerButton, &QPushButton::clicked, [this](){ui.mainTabs->setCurrentIndex(3);} );
 }
 
 /***************************************************************************/
