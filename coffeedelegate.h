@@ -9,11 +9,6 @@
 /***************************************************************************/
 QT_FORWARD_DECLARE_CLASS(QPainter)
 /***************************************************************************/
-class QPainter;
-class QStyleOptionViewItem;
-class QModelIndex;
-/***************************************************************************/
-
 class CoffeeDelegate : public QSqlRelationalDelegate
 {
   public:
@@ -46,7 +41,7 @@ class CoffeeDelegate : public QSqlRelationalDelegate
         ) const override;
 
   private:
-    QPixmap star;
+    QPixmap bean;
 };
 
 /***************************************************************************/

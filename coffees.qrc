@@ -1,5 +1,13 @@
 <!DOCTYPE RCC><RCC version="1.0">
 <qresource prefix="/">
   <file>images/star.png</file>
+  <file>images/bean.png</file>
+  <file>images/coffee.png</file>
+  <file>images/coffee2.png</file>
+  <file>images/ground.png</file>
+  <file>images/ground_v.png</file>
+  <file>images/spoon.png</file>
+  <file>images/data_config.png</file>
+  <file>images/clock.png</file>
 </qresource>
 </RCC>

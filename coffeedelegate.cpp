@@ -8,7 +8,7 @@ CoffeeDelegate::CoffeeDelegate(
     QObject *parent
     )
   : QSqlRelationalDelegate(parent),
-    star(QPixmap(":images/star.png"))
+    bean(QPixmap(":images/bean.png"))
 {
 }
 
@@ -20,7 +20,7 @@ void CoffeeDelegate::paint(
     const QModelIndex &index
     ) const
 {
-  if (index.column() != 5) {
+  if (index.column() != 12) {
     QStyleOptionViewItem opt = option;
     opt.rect.adjust(0, 0, -1, -1); // since we draw the grid ourselves
     QSqlRelationalDelegate::paint(painter, opt, index);
@@ -35,12 +35,12 @@ void CoffeeDelegate::paint(
     }
 
     const int rating = model->data(index, Qt::DisplayRole).toInt();
-    const int width = star.width();
-    const int height = star.height();
+    const int width = bean.width();
+    const int height = bean.height();
     int x = option.rect.x();
     const int y = option.rect.y() + (option.rect.height() / 2) - (height / 2);
     for (int i = 0; i < rating; ++i) {
-      painter->drawPixmap(x, y, star);
+      painter->drawPixmap(x, y, bean);
       x += width;
     }
     drawFocus(painter, option, option.rect.adjusted(0, 0, -1, -1)); // since we draw the grid ourselves
@@ -60,8 +60,8 @@ QSize CoffeeDelegate::sizeHint(
     const QModelIndex &index
     ) const
 {
-  if (index.column() == 5) {
-    return QSize(5 * star.width(), star.height()) + QSize(1, 1);
+  if (index.column() == 12) {
+    return QSize(5 * bean.width(), bean.height()) + QSize(1, 1);
   }
 
   return QSqlRelationalDelegate::sizeHint(option, index) + QSize(1, 1); // since we draw the grid ourselves
@@ -76,14 +76,14 @@ bool CoffeeDelegate::editorEvent(
     const QModelIndex &index
     )
 {
-  if (index.column() != 5) {
+  if (index.column() != 12) {
     return QSqlRelationalDelegate::editorEvent(event, model, option, index);
   }
 
   if (event->type() == QEvent::MouseButtonPress) {
     QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
     int stars = qBound(0, int(0.7 + qreal(mouseEvent->pos().x()
-                                          - option.rect.x()) / star.width()), 5);
+                                          - option.rect.x()) / bean.width()), 5);
     model->setData(index, QVariant(stars));
     return false; //so that the selection can change
   }

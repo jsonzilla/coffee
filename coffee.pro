@@ -1,18 +1,21 @@
 TEMPLATE = app
 INCLUDEPATH += .
 
-HEADERS     = initdb.h \
+HEADERS     = \
     coffeewindow.h \
-    coffeedelegate.h
+    coffeedelegate.h \
+    databasemamager.h \
+    tablemodelutils.h
 RESOURCES   = \
     coffees.qrc
 SOURCES     = main.cpp \
     coffeewindow.cpp \
-    coffeedelegate.cpp
+    coffeedelegate.cpp \
+    databasemamager.cpp
 FORMS       = \
     coffeewindow.ui
 
 QT += sql widgets widgets
 
-target.path = ./build
+target.path = build
 INSTALLS += target
