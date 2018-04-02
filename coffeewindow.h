@@ -37,8 +37,8 @@ class CoffeeWindow: public QMainWindow
     QSqlRelationalTableModel *groundModel = nullptr;
     QSqlRelationalTableModel *methodModel = nullptr;
     DatabaseMamager* db = nullptr;
-    int methodIdx = 1;
-    int groundIdx = 1;
+    int methodIdx;
+    int groundIdx;
     int lastBrewIndex = 0;
     int lastGroundIndex = 0;
     int lastMethodIndex = 0;

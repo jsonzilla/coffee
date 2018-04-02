@@ -129,8 +129,8 @@ QVariant DatabaseMamager::AddMethod(
 QSqlError DatabaseMamager::SetupDb()
 {
   auto db = QSqlDatabase::addDatabase("QSQLITE");
-  // db.setDatabaseName(":memory:"); //HIRO change to another name save to disk
-  db.setDatabaseName("coffee");
+  //db.setDatabaseName(":memory:"); //HIRO change to another name save to disk
+  db.setDatabaseName("coffee.db");
 
   if (!db.open()) {
     return db.lastError();
@@ -143,6 +143,7 @@ QSqlError DatabaseMamager::SetupDb()
   }
 
   auto err = CreateTables();
+
   if (err.type() != QSqlError::NoError) {
     return err;
   }

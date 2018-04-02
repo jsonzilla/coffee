@@ -14,8 +14,10 @@ namespace TableModelUtils
 
   void ShowError(const QSqlError &err)
   {
+    if (err.type() != QSqlError::NoError) {
     QMessageBox::critical(nullptr, "Unable to initialize Database",
                           "Error initializing database: " + err.text());
+    }
   }
 
   /***************************************************************************/
