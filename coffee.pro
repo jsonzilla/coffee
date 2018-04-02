@@ -15,7 +15,7 @@ SOURCES     = main.cpp \
 FORMS       = \
     coffeewindow.ui
 
-QT += sql widgets widgets
+QT += sql widgets
 
 target.path = build
 INSTALLS += target

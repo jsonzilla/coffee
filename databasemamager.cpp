@@ -91,7 +91,7 @@ QVariant DatabaseMamager::AddGround(
     const QDate& dateroast
     )
 {
-  !q.prepare(QLatin1String("insert into grounds("
+  q.prepare(QLatin1String("insert into grounds("
                            "name,"
                            "origin,"
                            "roast,"
@@ -113,7 +113,7 @@ QVariant DatabaseMamager::AddMethod(
     const QString &variant
     )
 {
-  !q.prepare(QLatin1String("insert into methods("
+  q.prepare(QLatin1String("insert into methods("
                            "name,"
                            "variant)"
                            "values(?, ?)"));
