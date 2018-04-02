@@ -9,5 +9,7 @@
   <file>images/spoon.png</file>
   <file>images/data_config.png</file>
   <file>images/clock.png</file>
+  <file>images/arrow-up.png</file>
+  <file>images/arrow-down.png</file>
 </qresource>
 </RCC>

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1156</width>
-    <height>1040</height>
+    <width>684</width>
+    <height>739</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -18,7 +18,95 @@
     <normaloff>:/images/coffee.png</normaloff>:/images/coffee.png</iconset>
   </property>
   <property name="styleSheet">
-   <string notr="true">background-color: rgb(85, 87, 83);</string>
+   <string notr="true">* {
+	background-color: rgb(85, 87, 83);
+}
+QTabWidget {
+	background-color: rgb(255, 255, 255) ;
+}
+QWidget#brewTab, QWidget#groundTab, QWidget#methodTab {
+	background-color: rgb(255, 255, 255) ;
+}
+QTableView {
+	background-color: rgb(255, 255, 255) ;
+}
+QGroupBox {
+	background-color: rgb(255, 255, 255) ;
+}
+QLabel {
+	font: bold;
+	background-color: rgb(255, 255, 255) ;
+}
+QSlider {
+	background-color: rgb(255, 255, 255) ;
+}
+QSlider::groove:horizontal {
+    border: 1px solid #999999;
+    height: 8px; /* the groove expands to the size of the slider by default. by giving it a height, it has a fixed size */
+    background: qlineargradient(x1:0, y1:0, x2:0, y2:1, stop:0 #B1B1B1, stop:1 #c4c4c4);
+    margin: 2px 0;
+}
+
+QSlider::handle:horizontal {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1, stop:0 #b4b4b4, stop:1 #8f8f8f);
+    border: 1px solid #5c5c5c;
+    width: 18px;
+    margin: -6px 0; /* handle is placed by default on the contents rect of the groove. Expand outside the groove */
+    border-radius: 3px;
+}
+QPushButton {
+	background-color: rgb(255, 255, 255) ;
+	font: bold;
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: #999999;
+    padding: 5px;
+}
+QLineEdit, QSpinBox, QDoubleSpinBox, QComboBox, QDateTimeEdit , QPlainTextEdit { 
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 4px;
+    border-color: #999999;
+    padding: 5px;
+	background-color: rgb(244, 244, 244) ;
+}
+
+QComboBox::drop-down {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 15px;
+    border-left-width: 1px;
+    border-left-color: rgb(244, 244, 244) ;
+    border-left-style: solid;
+    border-top-right-radius: 5px; 
+    border-bottom-right-radius: 5px;
+	background-color: rgb(255, 255, 255) ;
+}
+QComboBox::down-arrow {
+    image: none; /*url(:/images/arrow-down.png);*/
+}
+QComboBox QAbstractItemView {
+    border: 1px solid rgb(244, 244, 244);
+	background-color: rgb(255, 255, 255) ;
+    selection-background-color:  #99999 ;
+}
+ QSpinBox::up-button, QDoubleSpinBox::up-button, QDateTimeEdit::up-button {
+     subcontrol-origin: border;
+     subcontrol-position: top right; /* position at the top right corner */
+     width: 16px; /* 16 + 2*1px border-width = 15px padding + 3px parent border */
+     /* border-image: url(:/images/arrow-up.png) 1; */
+     border-width: 1px;
+ }
+ QSpinBox::down-button,  QDoubleSpinBox::down-button,  QDateTimeEdit::down-button {
+     subcontrol-origin: border;
+     subcontrol-position: bottom right; /* position at bottom right corner */
+     width: 16px;
+     /* border-image: url(:/images/arrow-down.png) 1; */
+     border-width: 1px;
+     border-top-width: 0;
+ }
+</string>
   </property>
   <widget class="QWidget" name="centralWidget">
    <property name="styleSheet">
@@ -28,7 +116,7 @@
     <item row="0" column="3">
      <widget class="QTabWidget" name="mainTabs">
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(255, 255, 255);</string>
+       <string notr="true"/>
       </property>
       <property name="tabPosition">
        <enum>QTabWidget::West</enum>
@@ -85,33 +173,16 @@
            <string>Details</string>
           </property>
           <layout class="QGridLayout" name="gridLayout_2">
-           <item row="16" column="3">
-            <widget class="QSlider" name="sliderClarity">
-             <property name="minimum">
-              <number>1</number>
+           <item row="14" column="0">
+            <widget class="QLabel" name="labelSweetness">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
-             <property name="maximum">
-              <number>100</number>
-             </property>
-             <property name="value">
-              <number>50</number>
-             </property>
-             <property name="orientation">
-              <enum>Qt::Horizontal</enum>
-             </property>
-            </widget>
-           </item>
-           <item row="16" column="0">
-            <widget class="QLabel" name="labelClarity">
              <property name="text">
-              <string>Clarity</string>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="4">
-            <widget class="QLabel" name="label_10">
-             <property name="text">
-              <string>c</string>
+              <string>Sweetness</string>
              </property>
             </widget>
            </item>
@@ -128,6 +199,54 @@
              </property>
              <property name="orientation">
               <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="3" colspan="2">
+            <widget class="QSpinBox" name="ratingEdit">
+             <property name="maximum">
+              <number>5</number>
+             </property>
+            </widget>
+           </item>
+           <item row="18" column="3">
+            <widget class="QSlider" name="sliderAftertaste">
+             <property name="minimumSize">
+              <size>
+               <width>0</width>
+               <height>0</height>
+              </size>
+             </property>
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="value">
+              <number>50</number>
+             </property>
+             <property name="orientation">
+              <enum>Qt::Horizontal</enum>
+             </property>
+            </widget>
+           </item>
+           <item row="18" column="4">
+            <widget class="QSpinBox" name="spinAftertaste">
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="value">
+              <number>50</number>
              </property>
             </widget>
            </item>
@@ -150,79 +269,138 @@
              </property>
             </widget>
            </item>
-           <item row="10" column="0">
-            <widget class="QLabel" name="label_3">
+           <item row="18" column="0">
+            <widget class="QLabel" name="labelAftertaste">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
-              <string>Temperature</string>
+              <string>Aftertaste</string>
              </property>
             </widget>
            </item>
-           <item row="11" column="0">
-            <widget class="QLabel" name="label_2">
-             <property name="text">
-              <string>Grind</string>
-             </property>
-            </widget>
-           </item>
-           <item row="9" column="0">
-            <widget class="QLabel" name="label_7">
-             <property name="text">
-              <string>Ratio</string>
-             </property>
-            </widget>
-           </item>
-           <item row="10" column="3">
-            <widget class="QDoubleSpinBox" name="temperatureDoubleSpin">
-             <property name="minimum">
-              <double>-99.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="13" column="3" colspan="2">
-            <widget class="QSpinBox" name="ratingEdit">
-             <property name="maximum">
-              <number>5</number>
-             </property>
-            </widget>
-           </item>
-           <item row="8" column="4">
-            <widget class="QLabel" name="label_9">
-             <property name="text">
-              <string>ml</string>
-             </property>
-            </widget>
-           </item>
-           <item row="17" column="0">
-            <widget class="QLabel" name="labelBody">
-             <property name="text">
-              <string>Body</string>
-             </property>
-            </widget>
-           </item>
-           <item row="11" column="3" colspan="2">
-            <widget class="QLineEdit" name="grindEdit"/>
-           </item>
-           <item row="7" column="3">
-            <widget class="QDoubleSpinBox" name="weightDoubleSpin">
-             <property name="decimals">
-              <number>0</number>
-             </property>
-             <property name="minimum">
-              <double>1.000000000000000</double>
-             </property>
-             <property name="maximum">
-              <double>9999.000000000000000</double>
-             </property>
-            </widget>
-           </item>
-           <item row="18" column="3">
-            <widget class="QSlider" name="sliderAftertaste">
-             <property name="minimumSize">
+           <item row="15" column="4">
+            <widget class="QSpinBox" name="spinAcidity">
+             <property name="maximumSize">
               <size>
-               <width>0</width>
-               <height>0</height>
+               <width>50</width>
+               <height>16777215</height>
               </size>
              </property>
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="value">
+              <number>50</number>
+             </property>
+            </widget>
+           </item>
+           <item row="22" column="0">
+            <layout class="QHBoxLayout" name="BrewButtonsLayout">
+             <item>
+              <widget class="QPushButton" name="buttonAddBrew">
+               <property name="text">
+                <string>Add</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QPushButton" name="buttonRemoveBrew">
+               <property name="text">
+                <string>Remove</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item row="15" column="0">
+            <widget class="QLabel" name="labelAcidity">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Acidity</string>
+             </property>
+            </widget>
+           </item>
+           <item row="14" column="4">
+            <widget class="QSpinBox" name="spinSweetness">
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="value">
+              <number>50</number>
+             </property>
+            </widget>
+           </item>
+           <item row="19" column="3" colspan="2">
+            <widget class="QPlainTextEdit" name="notesTextEdit"/>
+           </item>
+           <item row="16" column="0">
+            <widget class="QLabel" name="labelClarity">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Clarity</string>
+             </property>
+            </widget>
+           </item>
+           <item row="17" column="4">
+            <widget class="QSpinBox" name="spinBody">
+             <property name="maximumSize">
+              <size>
+               <width>50</width>
+               <height>16777215</height>
+              </size>
+             </property>
+             <property name="minimum">
+              <number>1</number>
+             </property>
+             <property name="maximum">
+              <number>100</number>
+             </property>
+             <property name="value">
+              <number>50</number>
+             </property>
+            </widget>
+           </item>
+           <item row="13" column="0">
+            <widget class="QLabel" name="labelRating">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Rating</string>
+             </property>
+            </widget>
+           </item>
+           <item row="16" column="3">
+            <widget class="QSlider" name="sliderClarity">
              <property name="minimum">
               <number>1</number>
              </property>
@@ -253,91 +431,111 @@
              </property>
             </widget>
            </item>
-           <item row="8" column="0">
-            <widget class="QLabel" name="label_5">
+           <item row="19" column="0">
+            <widget class="QLabel" name="label_4">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
-              <string>Water</string>
+              <string>Notes</string>
+             </property>
+             <property name="alignment">
+              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
              </property>
             </widget>
            </item>
-           <item row="7" column="4">
-            <widget class="QLabel" name="label_8">
+           <item row="20" column="3">
+            <spacer name="verticalSpacer">
+             <property name="orientation">
+              <enum>Qt::Vertical</enum>
+             </property>
+             <property name="sizeHint" stdset="0">
+              <size>
+               <width>20</width>
+               <height>40</height>
+              </size>
+             </property>
+            </spacer>
+           </item>
+           <item row="17" column="0">
+            <widget class="QLabel" name="labelBody">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
-              <string>g</string>
+              <string>Body</string>
              </property>
             </widget>
            </item>
-           <item row="7" column="0">
-            <widget class="QLabel" name="label_6">
+           <item row="11" column="3" colspan="2">
+            <widget class="QLineEdit" name="grindEdit"/>
+           </item>
+           <item row="0" column="0">
+            <widget class="QLabel" name="labelTitle">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
-              <string>Weight</string>
+              <string>Name</string>
              </property>
             </widget>
-           </item>
-           <item row="9" column="3">
-            <widget class="QLineEdit" name="ratioEdit">
-             <property name="enabled">
-              <bool>false</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="14" column="0">
-            <widget class="QLabel" name="labelSweetness">
-             <property name="text">
-              <string>Sweetness</string>
-             </property>
-            </widget>
-           </item>
-           <item row="2" column="0">
-            <widget class="QLabel" name="labelGround">
-             <property name="text">
-              <string>Ground</string>
-             </property>
-            </widget>
-           </item>
-           <item row="19" column="3" colspan="2">
-            <widget class="QPlainTextEdit" name="notesTextEdit"/>
            </item>
            <item row="3" column="3" colspan="2">
             <widget class="QDateTimeEdit" name="dateTimeEdit"/>
            </item>
-           <item row="13" column="0">
-            <widget class="QLabel" name="labelRating">
-             <property name="text">
-              <string>Rating</string>
-             </property>
-            </widget>
+           <item row="4" column="3">
+            <widget class="QTimeEdit" name="timeEdit"/>
            </item>
-           <item row="1" column="0">
-            <widget class="QLabel" name="labelMethod">
+           <item row="4" column="4">
+            <widget class="QPushButton" name="timerButton">
              <property name="text">
-              <string>Method</string>
+              <string/>
              </property>
-            </widget>
-           </item>
-           <item row="15" column="4">
-            <widget class="QSpinBox" name="spinAcidity">
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>100</number>
-             </property>
-             <property name="value">
-              <number>50</number>
+             <property name="icon">
+              <iconset resource="coffees.qrc">
+               <normaloff>:/images/clock.png</normaloff>:/images/clock.png</iconset>
              </property>
             </widget>
            </item>
            <item row="4" column="0">
             <widget class="QLabel" name="label">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
              <property name="text">
               <string>Time</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="0">
+            <widget class="QLabel" name="labelMethod">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Method</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="3" colspan="2">
+            <widget class="QLineEdit" name="nameEdit">
+             <property name="enabled">
+              <bool>true</bool>
              </property>
             </widget>
            </item>
@@ -348,54 +546,102 @@
              </property>
             </widget>
            </item>
-           <item row="17" column="4">
-            <widget class="QSpinBox" name="spinBody">
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>16777215</height>
-              </size>
+           <item row="2" column="0">
+            <widget class="QLabel" name="labelGround">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
              </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>100</number>
-             </property>
-             <property name="value">
-              <number>50</number>
-             </property>
-            </widget>
-           </item>
-           <item row="3" column="0">
-            <widget class="QLabel" name="labelDate">
              <property name="text">
-              <string>Date</string>
+              <string>Ground</string>
              </property>
             </widget>
-           </item>
-           <item row="22" column="0">
-            <layout class="QHBoxLayout" name="BrewButtonsLayout">
-             <item>
-              <widget class="QPushButton" name="buttonAddBrew">
-               <property name="text">
-                <string>Add</string>
-               </property>
-              </widget>
-             </item>
-             <item>
-              <widget class="QPushButton" name="buttonRemoveBrew">
-               <property name="text">
-                <string>Remove</string>
-               </property>
-              </widget>
-             </item>
-            </layout>
            </item>
            <item row="2" column="3" colspan="2">
             <widget class="QComboBox" name="groundEdit">
              <property name="enabled">
               <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="3" column="0">
+            <widget class="QLabel" name="labelDate">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Date</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="4">
+            <widget class="QLabel" name="label_8">
+             <property name="text">
+              <string>g</string>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="0">
+            <widget class="QLabel" name="label_3">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Temperature</string>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="3">
+            <widget class="QDoubleSpinBox" name="temperatureDoubleSpin">
+             <property name="minimum">
+              <double>-99.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="11" column="0">
+            <widget class="QLabel" name="label_2">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Grind</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="0">
+            <widget class="QLabel" name="label_6">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Weight</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="0">
+            <widget class="QLabel" name="label_5">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Water</string>
              </property>
             </widget>
            </item>
@@ -409,6 +655,53 @@
              </property>
              <property name="maximum">
               <double>9999.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="0">
+            <widget class="QLabel" name="label_7">
+             <property name="sizePolicy">
+              <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+               <horstretch>0</horstretch>
+               <verstretch>0</verstretch>
+              </sizepolicy>
+             </property>
+             <property name="text">
+              <string>Ratio</string>
+             </property>
+            </widget>
+           </item>
+           <item row="8" column="4">
+            <widget class="QLabel" name="label_9">
+             <property name="text">
+              <string>ml</string>
+             </property>
+            </widget>
+           </item>
+           <item row="10" column="4">
+            <widget class="QLabel" name="label_10">
+             <property name="text">
+              <string>c</string>
+             </property>
+            </widget>
+           </item>
+           <item row="7" column="3">
+            <widget class="QDoubleSpinBox" name="weightDoubleSpin">
+             <property name="decimals">
+              <number>0</number>
+             </property>
+             <property name="minimum">
+              <double>1.000000000000000</double>
+             </property>
+             <property name="maximum">
+              <double>9999.000000000000000</double>
+             </property>
+            </widget>
+           </item>
+           <item row="9" column="3">
+            <widget class="QLineEdit" name="ratioEdit">
+             <property name="enabled">
+              <bool>false</bool>
              </property>
             </widget>
            </item>
@@ -427,109 +720,6 @@
               <enum>Qt::Horizontal</enum>
              </property>
             </widget>
-           </item>
-           <item row="0" column="3" colspan="2">
-            <widget class="QLineEdit" name="nameEdit">
-             <property name="enabled">
-              <bool>true</bool>
-             </property>
-            </widget>
-           </item>
-           <item row="0" column="0">
-            <widget class="QLabel" name="labelTitle">
-             <property name="text">
-              <string>Name</string>
-             </property>
-            </widget>
-           </item>
-           <item row="18" column="0">
-            <widget class="QLabel" name="labelAftertaste">
-             <property name="text">
-              <string>Aftertaste</string>
-             </property>
-            </widget>
-           </item>
-           <item row="19" column="0">
-            <widget class="QLabel" name="label_4">
-             <property name="text">
-              <string>Notes</string>
-             </property>
-             <property name="alignment">
-              <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-             </property>
-            </widget>
-           </item>
-           <item row="18" column="4">
-            <widget class="QSpinBox" name="spinAftertaste">
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>100</number>
-             </property>
-             <property name="value">
-              <number>50</number>
-             </property>
-            </widget>
-           </item>
-           <item row="15" column="0">
-            <widget class="QLabel" name="labelAcidity">
-             <property name="text">
-              <string>Acidity</string>
-             </property>
-            </widget>
-           </item>
-           <item row="14" column="4">
-            <widget class="QSpinBox" name="spinSweetness">
-             <property name="maximumSize">
-              <size>
-               <width>50</width>
-               <height>16777215</height>
-              </size>
-             </property>
-             <property name="minimum">
-              <number>1</number>
-             </property>
-             <property name="maximum">
-              <number>100</number>
-             </property>
-             <property name="value">
-              <number>50</number>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="4">
-            <widget class="QPushButton" name="timerButton">
-             <property name="text">
-              <string/>
-             </property>
-             <property name="icon">
-              <iconset resource="coffees.qrc">
-               <normaloff>:/images/clock.png</normaloff>:/images/clock.png</iconset>
-             </property>
-            </widget>
-           </item>
-           <item row="4" column="3">
-            <widget class="QTimeEdit" name="timeEdit"/>
-           </item>
-           <item row="20" column="3">
-            <spacer name="verticalSpacer">
-             <property name="orientation">
-              <enum>Qt::Vertical</enum>
-             </property>
-             <property name="sizeHint" stdset="0">
-              <size>
-               <width>20</width>
-               <height>40</height>
-              </size>
-             </property>
-            </spacer>
            </item>
           </layout>
          </widget>
