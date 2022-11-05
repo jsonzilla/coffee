@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>684</width>
-    <height>739</height>
+    <height>894</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -122,7 +122,7 @@ QComboBox QAbstractItemView {
        <enum>QTabWidget::West</enum>
       </property>
       <property name="currentIndex">
-       <number>0</number>
+       <number>2</number>
       </property>
       <property name="iconSize">
        <size>
@@ -926,24 +926,6 @@ QComboBox QAbstractItemView {
          </widget>
         </item>
        </layout>
-      </widget>
-      <widget class="QWidget" name="tabTimer">
-       <attribute name="icon">
-        <iconset resource="coffees.qrc">
-         <normaloff>:/images/clock.png</normaloff>:/images/clock.png</iconset>
-       </attribute>
-       <attribute name="title">
-        <string>Timer</string>
-       </attribute>
-      </widget>
-      <widget class="QWidget" name="tab">
-       <attribute name="icon">
-        <iconset resource="coffees.qrc">
-         <normaloff>:/images/data_config.png</normaloff>:/images/data_config.png</iconset>
-       </attribute>
-       <attribute name="title">
-        <string>Options</string>
-       </attribute>
       </widget>
      </widget>
     </item>
