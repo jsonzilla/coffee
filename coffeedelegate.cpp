@@ -5,20 +5,19 @@
 /***************************************************************************/
 
 CoffeeDelegate::CoffeeDelegate(
-    QObject *parent
-    )
-  : QSqlRelationalDelegate(parent),
-    bean(QPixmap(":images/bean.png"))
+  QObject* parent
+)
+  : QSqlRelationalDelegate(parent)
 {
 }
 
 /***************************************************************************/
 
 void CoffeeDelegate::paint(
-    QPainter *painter,
-    const QStyleOptionViewItem &option,
-    const QModelIndex &index
-    ) const
+  QPainter* painter,
+  const QStyleOptionViewItem& option,
+  const QModelIndex& index
+) const
 {
   if (index.column() != 12) {
     QStyleOptionViewItem opt = option;
@@ -26,9 +25,9 @@ void CoffeeDelegate::paint(
     QSqlRelationalDelegate::paint(painter, opt, index);
   }
   else {
-    const QAbstractItemModel *model = index.model();
-    QPalette::ColorGroup cg = (option.state & QStyle::State_Enabled) ?
-                              (option.state & QStyle::State_Active) ? QPalette::Normal : QPalette::Inactive : QPalette::Disabled;
+    const QAbstractItemModel* model = index.model();
+    auto currentActiveState = (option.state & QStyle::State_Active) ? QPalette::Normal : QPalette::Inactive;
+    QPalette::ColorGroup cg = (option.state & QStyle::State_Enabled) ? currentActiveState : QPalette::Disabled;
 
     if (option.state & QStyle::State_Selected) {
       painter->fillRect(option.rect, option.palette.color(cg, QPalette::Highlight));
@@ -43,7 +42,6 @@ void CoffeeDelegate::paint(
       painter->drawPixmap(x, y, bean);
       x += width;
     }
-    drawFocus(painter, option, option.rect.adjusted(0, 0, -1, -1)); // since we draw the grid ourselves
   }
 
   QPen pen = painter->pen();
@@ -56,9 +54,9 @@ void CoffeeDelegate::paint(
 /***************************************************************************/
 
 QSize CoffeeDelegate::sizeHint(
-    const QStyleOptionViewItem &option,
-    const QModelIndex &index
-    ) const
+  const QStyleOptionViewItem& option,
+  const QModelIndex& index
+) const
 {
   if (index.column() == 12) {
     return QSize(5 * bean.width(), bean.height()) + QSize(1, 1);
@@ -70,20 +68,20 @@ QSize CoffeeDelegate::sizeHint(
 /***************************************************************************/
 
 bool CoffeeDelegate::editorEvent(
-    QEvent *event,
-    QAbstractItemModel *model,
-    const QStyleOptionViewItem &option,
-    const QModelIndex &index
-    )
+  QEvent* event,
+  QAbstractItemModel* model,
+  const QStyleOptionViewItem& option,
+  const QModelIndex& index
+)
 {
   if (index.column() != 12) {
     return QSqlRelationalDelegate::editorEvent(event, model, option, index);
   }
 
   if (event->type() == QEvent::MouseButtonPress) {
-    QMouseEvent *mouseEvent = static_cast<QMouseEvent*>(event);
+    auto const* mouseEvent = static_cast<QMouseEvent*>(event);
     int stars = qBound(0, int(0.7 + qreal(mouseEvent->pos().x()
-                                          - option.rect.x()) / bean.width()), 5);
+      - option.rect.x()) / bean.width()), 5);
     model->setData(index, QVariant(stars));
     return false; //so that the selection can change
   }
@@ -93,18 +91,18 @@ bool CoffeeDelegate::editorEvent(
 
 /***************************************************************************/
 
-QWidget *CoffeeDelegate::createEditor(
-    QWidget *parent,
-    const QStyleOptionViewItem &option,
-    const QModelIndex &index
-    ) const
+QWidget* CoffeeDelegate::createEditor(
+  QWidget* parent,
+  const QStyleOptionViewItem& option,
+  const QModelIndex& index
+) const
 {
   if (index.column() != 4) {
     return QSqlRelationalDelegate::createEditor(parent, option, index);
   }
 
   // for editing the year, return a spinbox with a range from -1000 to 2100.
-  QSpinBox *sb = new QSpinBox(parent);
+  auto* sb = new QSpinBox(parent);
   sb->setFrame(false);
   sb->setMaximum(2100);
   sb->setMinimum(-1000);

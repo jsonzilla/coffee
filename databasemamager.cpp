@@ -22,45 +22,45 @@ DatabaseMamager::DatabaseMamager()
 /***************************************************************************/
 
 void DatabaseMamager::AddBrew(
-    QSqlQuery &q,
-    const QString &name,
-    const QVariant &methodId,
-    const QVariant &groundId,
-    const QDateTime& date,
-    int ratio,
-    const QTime& time,
-    double water,
-    double weight,
-    int grind,
-    double temperature,
-    const QString& notes,
-    int rating,
-    int sweetness,
-    int acidity,
-    int clarity,
-    int body,
-    int aftertaste
-    )
+  QSqlQuery& q,
+  const QString& name,
+  const QVariant& methodId,
+  const QVariant& groundId,
+  const QDateTime& date,
+  int ratio,
+  const QTime& time,
+  double water,
+  double weight,
+  int grind,
+  double temperature,
+  const QString& notes,
+  int rating,
+  int sweetness,
+  int acidity,
+  int clarity,
+  int body,
+  int aftertaste
+)
 {
   q.prepare(QLatin1String("insert into brews("
-                          "name,"
-                          "method,"
-                          "ground,"
-                          "date,"
-                          "ratio,"
-                          "time,"
-                          "water,"
-                          "weight,"
-                          "grind,"
-                          "temperature,"
-                          "notes,"
-                          "rating,"
-                          "sweetness,"
-                          "acidity,"
-                          "clarity,"
-                          "body,"
-                          "aftertaste)"
-                          "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
+    "name,"
+    "method,"
+    "ground,"
+    "date,"
+    "ratio,"
+    "time,"
+    "water,"
+    "weight,"
+    "grind,"
+    "temperature,"
+    "notes,"
+    "rating,"
+    "sweetness,"
+    "acidity,"
+    "clarity,"
+    "body,"
+    "aftertaste)"
+    "values(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)"));
   q.addBindValue(name);
   q.addBindValue(methodId);
   q.addBindValue(groundId);
@@ -84,19 +84,19 @@ void DatabaseMamager::AddBrew(
 /***************************************************************************/
 
 QVariant DatabaseMamager::AddGround(
-    QSqlQuery &q,
-    const QString &name,
-    int origin,
-    int roast,
-    const QDate& dateroast
-    )
+  QSqlQuery& q,
+  const QString& name,
+  int origin,
+  int roast,
+  const QDate& dateroast
+)
 {
   q.prepare(QLatin1String("insert into grounds("
-                           "name,"
-                           "origin,"
-                           "roast,"
-                           "dateroast"
-                           ") values(?,?,?,?)"));
+    "name,"
+    "origin,"
+    "roast,"
+    "dateroast"
+    ") values(?,?,?,?)"));
   q.addBindValue(name);
   q.addBindValue(origin);
   q.addBindValue(roast);
@@ -108,15 +108,15 @@ QVariant DatabaseMamager::AddGround(
 /***************************************************************************/
 
 QVariant DatabaseMamager::AddMethod(
-    QSqlQuery &q,
-    const QString &name,
-    const QString &variant
-    )
+  QSqlQuery& q,
+  const QString& name,
+  const QString& variant
+)
 {
   q.prepare(QLatin1String("insert into methods("
-                           "name,"
-                           "variant)"
-                           "values(?, ?)"));
+    "name,"
+    "variant)"
+    "values(?, ?)"));
 
   q.addBindValue(name);
   q.addBindValue(variant);
@@ -136,15 +136,12 @@ QSqlError DatabaseMamager::SetupDb()
     return db.lastError();
   }
 
-  QStringList tables = db.tables();
-  if (tables.contains("brews", Qt::CaseInsensitive)
-      && tables.contains("methods", Qt::CaseInsensitive)) {
+  if (QStringList tables = db.tables(); tables.contains("brews", Qt::CaseInsensitive)
+    && tables.contains("methods", Qt::CaseInsensitive)) {
     return QSqlError();
   }
 
-  auto err = CreateTables();
-
-  if (err.type() != QSqlError::NoError) {
+  if (auto err = CreateTables(); err.type() != QSqlError::NoError) {
     return err;
   }
 
@@ -157,40 +154,40 @@ QSqlError DatabaseMamager::CreateTables()
 {
   QSqlQuery q;
   if (!q.exec(QLatin1String("create table brews("
-                            "id integer primary key AUTOINCREMENT,"
-                            "name varchar,"
-                            "method integer,"
-                            "ground integer,"
-                            "date varchar,"
-                            "ratio integer,"
-                            "time varchar,"
-                            "water real,"
-                            "weight real,"
-                            "grind integer,"
-                            "temperature real,"
-                            "notes varchar,"
-                            "rating integer,"
-                            "sweetness interger,"
-                            "acidity interger,"
-                            "clarity interger,"
-                            "body interger,"
-                            "aftertaste interger)"))) {
+    "id integer primary key AUTOINCREMENT,"
+    "name varchar,"
+    "method integer,"
+    "ground integer,"
+    "date varchar,"
+    "ratio integer,"
+    "time varchar,"
+    "water real,"
+    "weight real,"
+    "grind integer,"
+    "temperature real,"
+    "notes varchar,"
+    "rating integer,"
+    "sweetness interger,"
+    "acidity interger,"
+    "clarity interger,"
+    "body interger,"
+    "aftertaste interger)"))) {
     return q.lastError();
   }
 
   if (!q.exec(QLatin1String("create table methods("
-                            "id integer primary key AUTOINCREMENT, "
-                            "name varchar, "
-                            "variant varchar)"))) {
+    "id integer primary key AUTOINCREMENT, "
+    "name varchar, "
+    "variant varchar)"))) {
     return q.lastError();
   }
 
   if (!q.exec(QLatin1String("create table grounds("
-                            "id integer primary key AUTOINCREMENT, "
-                            "name varchar,"
-                            "origin integer,"
-                            "roast integer,"
-                            "dateroast varchar)"))) {
+    "id integer primary key AUTOINCREMENT, "
+    "name varchar,"
+    "origin integer,"
+    "roast integer,"
+    "dateroast varchar)"))) {
     return q.lastError();
   }
 
@@ -209,9 +206,9 @@ QSqlError DatabaseMamager::CreateDefaultData()
 
   AddGround(q, QLatin1String("Baggio Bourbon"), 1, 1, QDate::currentDate());
   AddGround(q, QLatin1String("Baggio Expresso"), 1, 1, QDate::currentDate());
-  AddGround(q, QLatin1String("Orfeu Pisseli"),  1, 1, QDate::currentDate());
+  AddGround(q, QLatin1String("Orfeu Pisseli"), 1, 1, QDate::currentDate());
   AddGround(q, QLatin1String("Baggio Aromas - Caramelo"), 1, 1, QDate::currentDate());
-  AddGround(q, QLatin1String("Superior"),  1, 1, QDate::currentDate());
+  AddGround(q, QLatin1String("Superior"), 1, 1, QDate::currentDate());
 
   CreateNewBrew();
 
@@ -233,7 +230,7 @@ QSqlError DatabaseMamager::CreateNewGround()
 QSqlError DatabaseMamager::CreateNewMethod()
 {
   QSqlQuery q;
-  AddMethod(q,"", "");
+  AddMethod(q, "", "");
 
   return q.lastError();
 }

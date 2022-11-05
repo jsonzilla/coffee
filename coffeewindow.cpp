@@ -16,9 +16,9 @@ CoffeeWindow::CoffeeWindow()
   CreateGroundModel();
   CreateMethodModel();
 
-  connect(ui.mainTabs, &QTabWidget::currentChanged, [this]() {  ui.brewTable->setCurrentIndex(brewModel->index(0, 0)); });
-  connect(ui.mainTabs, &QTabWidget::currentChanged, [this]() {  ui.groundTable->setCurrentIndex(groundModel->index(0, 0)); });
-  connect(ui.mainTabs, &QTabWidget::currentChanged, [this]() {  ui.methodTable->setCurrentIndex(methodModel->index(0, 0)); });
+  connect(ui.mainTabs, &QTabWidget::currentChanged, this, [this]() {  ui.brewTable->setCurrentIndex(brewModel->index(0, 0)); });
+  connect(ui.mainTabs, &QTabWidget::currentChanged, this, [this]() {  ui.groundTable->setCurrentIndex(groundModel->index(0, 0)); });
+  connect(ui.mainTabs, &QTabWidget::currentChanged, this, [this]() {  ui.methodTable->setCurrentIndex(methodModel->index(0, 0)); });
 
   //HIRO gambiarra
   ui.brewTable->setCurrentIndex(brewModel->index(0, 0));
@@ -27,8 +27,8 @@ CoffeeWindow::CoffeeWindow()
 /***************************************************************************/
 
 void CoffeeWindow::MapGroundForm(
-    QDataWidgetMapper* mapper
-    )
+  QDataWidgetMapper* mapper
+)
 {
   mapper->addMapping(ui.groundName, groundModel->fieldIndex("name"));
   mapper->addMapping(ui.originEdit, groundModel->fieldIndex("origin"));
@@ -42,27 +42,25 @@ void CoffeeWindow::CreateGroundModel()
 {
   groundModel = new QSqlRelationalTableModel(ui.groundTable);
   auto mapper = TableModelUtils::SetupModel(this, ui.groundTable, groundModel, "grounds");
-  TableModelUtils::PopulateModel(groundModel);
+  TableModelUtils::PopulateModel(*groundModel);
   MapGroundForm(mapper);
 
-  QStringList toHide;
-  toHide <<"id";
-  TableModelUtils::HideColumns(ui.groundTable, groundModel, toHide);
+  TableModelUtils::HideColumns(*ui.groundTable, *groundModel, { "id" });
 
   groundModel->setHeaderData(groundModel->fieldIndex("name"), Qt::Horizontal, tr("Name"));
   groundModel->setHeaderData(groundModel->fieldIndex("origin"), Qt::Horizontal, tr("Origin"));
   groundModel->setHeaderData(groundModel->fieldIndex("roast"), Qt::Horizontal, tr("Roast"));
   groundModel->setHeaderData(groundModel->fieldIndex("dateroast"), Qt::Horizontal, tr("Date roast"));
 
-  connect(ui.buttonAddGround, &QPushButton::clicked, [this]() { AddGround(); });
-  connect(ui.buttonRemoveGround, &QPushButton::clicked, [this](){ TableModelUtils::DeleteRow(ui.groundTable, groundModel);});
+  connect(ui.buttonAddGround, &QPushButton::clicked, this, [this]() { AddGround(); });
+  connect(ui.buttonRemoveGround, &QPushButton::clicked, this, [this]() { TableModelUtils::DeleteRow(*ui.groundTable, *groundModel); });
 }
 
 /***************************************************************************/
 
 void CoffeeWindow::MapMethodForm(
-    QDataWidgetMapper* mapper
-    )
+  QDataWidgetMapper* mapper
+)
 {
   mapper->addMapping(ui.methodNameEdit, methodModel->fieldIndex("name"));
   mapper->addMapping(ui.varianteEdit, methodModel->fieldIndex("variant"));
@@ -74,25 +72,25 @@ void CoffeeWindow::CreateMethodModel()
 {
   methodModel = new QSqlRelationalTableModel(ui.methodTable);
   auto mapper = TableModelUtils::SetupModel(this, ui.methodTable, methodModel, "methods");
-  TableModelUtils::PopulateModel(methodModel);
+  TableModelUtils::PopulateModel(*methodModel);
   MapMethodForm(mapper);
 
   QStringList toHide;
-  toHide <<"id";
-  TableModelUtils::HideColumns(ui.methodTable, methodModel, toHide);
+  toHide << "id";
+  TableModelUtils::HideColumns(*ui.methodTable, *methodModel, toHide);
 
   methodModel->setHeaderData(methodModel->fieldIndex("name"), Qt::Horizontal, tr("Name"));
   methodModel->setHeaderData(methodModel->fieldIndex("variant"), Qt::Horizontal, tr("Variant"));
 
-  connect(ui.buttonAddMethod, &QPushButton::clicked, [this]() { AddMethod(); });
-  connect(ui.buttonRemoveMethod, &QPushButton::clicked, [this](){ TableModelUtils::DeleteRow(ui.methodTable, methodModel);});
+  connect(ui.buttonAddMethod, &QPushButton::clicked, this, [this]() { AddMethod(); });
+  connect(ui.buttonRemoveMethod, &QPushButton::clicked, this, [this]() { TableModelUtils::DeleteRow(*ui.methodTable, *methodModel); });
 }
 
 /***************************************************************************/
 
 void CoffeeWindow::MapBrewForm(
-    QDataWidgetMapper* mapper
-    )
+  QDataWidgetMapper* mapper
+)
 {
   mapper->addMapping(ui.nameEdit, brewModel->fieldIndex("name"));
   mapper->addMapping(ui.methodEdit, methodIdx);
@@ -118,7 +116,7 @@ void CoffeeWindow::MapBrewForm(
   mapper->addMapping(ui.ratioEdit, brewModel->fieldIndex("ratio"));
 
   //connect button to tab timer
-  connect(ui.timerButton, &QPushButton::clicked, [this](){ui.mainTabs->setCurrentIndex(3);} );
+  connect(ui.timerButton, &QPushButton::clicked, [this]() {ui.mainTabs->setCurrentIndex(3); });
 }
 
 /***************************************************************************/
@@ -144,8 +142,8 @@ void CoffeeWindow::CreateBrewModel()
   ui.groundEdit->setModelColumn(brewModel->relationModel(groundIdx)->fieldIndex("name"));
 
   QStringList toHide;
-  toHide <<"id"<<"sweetness"<<"acidity"<<"clarity"<<"body"<<"aftertaste"<<"temperature"<<"notes"<<"water"<<"weight"<<"ratio"<<"time"<<"grind"<<"date";
-  TableModelUtils::HideColumns(ui.brewTable, brewModel, toHide);
+  toHide << "id" << "sweetness" << "acidity" << "clarity" << "body" << "aftertaste" << "temperature" << "notes" << "water" << "weight" << "ratio" << "time" << "grind" << "date";
+  TableModelUtils::HideColumns(*ui.brewTable, *brewModel, toHide);
 
   // Set the localized header captions
   brewModel->setHeaderData(methodIdx, Qt::Horizontal, tr("Method"));
@@ -159,10 +157,10 @@ void CoffeeWindow::CreateBrewModel()
   ui.brewTable->setItemDelegate(new CoffeeDelegate(this));
   mapper->setItemDelegate(new CoffeeDelegate(this));
 
-  TableModelUtils::PopulateModel(brewModel);
+  TableModelUtils::PopulateModel(*brewModel);
 
-  connect(ui.buttonAddBrew, &QPushButton::clicked, [this]() {AddBrew();});
-  connect(ui.buttonRemoveBrew, &QPushButton::clicked, [this](){ TableModelUtils::DeleteRow(ui.brewTable, brewModel);});
+  connect(ui.buttonAddBrew, &QPushButton::clicked, this, [this]() {AddBrew(); });
+  connect(ui.buttonRemoveBrew, &QPushButton::clicked, this, [this]() { TableModelUtils::DeleteRow(*ui.brewTable, *brewModel); });
 
   connect(ui.spinAcidity, SIGNAL(valueChanged(int)), ui.sliderAcidity, SLOT(setValue(int)));
   connect(ui.spinClarity, SIGNAL(valueChanged(int)), ui.sliderClarity, SLOT(setValue(int)));
@@ -179,7 +177,7 @@ void CoffeeWindow::CreateBrewModel()
 void CoffeeWindow::AddGround()
 {
   db->CreateNewGround();
-  TableModelUtils::PopulateModel(groundModel);
+  TableModelUtils::PopulateModel(*groundModel);
   ui.groundTable->setCurrentIndex(groundModel->index(0, 0));
 }
 
@@ -188,7 +186,7 @@ void CoffeeWindow::AddGround()
 void CoffeeWindow::AddMethod()
 {
   db->CreateNewMethod();
-  TableModelUtils::PopulateModel(methodModel);
+  TableModelUtils::PopulateModel(*methodModel);
   ui.methodTable->setCurrentIndex(methodModel->index(0, 0));
 }
 
@@ -197,7 +195,7 @@ void CoffeeWindow::AddMethod()
 void CoffeeWindow::AddBrew()
 {
   db->CreateNewBrew();
-  TableModelUtils::PopulateModel(brewModel);
+  TableModelUtils::PopulateModel(*brewModel);
   ui.brewTable->setCurrentIndex(brewModel->index(0, 0));
 }
 

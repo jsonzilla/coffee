@@ -8,26 +8,25 @@
 #include <QDataWidgetMapper>
 
 namespace TableModelUtils
-  {
-
+{
   /***************************************************************************/
 
-  void ShowError(const QSqlError &err)
+  void ShowError(const QSqlError& err)
   {
     if (err.type() != QSqlError::NoError) {
-    QMessageBox::critical(nullptr, "Unable to initialize Database",
-                          "Error initializing database: " + err.text());
+      QMessageBox::critical(nullptr, "Unable to initialize Database",
+        "Error initializing database: " + err.text());
     }
   }
 
   /***************************************************************************/
 
   void PopulateModel(
-      QSqlRelationalTableModel* model
-      )
+    QSqlRelationalTableModel& model
+  )
   {
-    if (!model->select()) {
-      ShowError(model->lastError());
+    if (!model.select()) {
+      ShowError(model.lastError());
       return;
     }
   }
@@ -35,12 +34,12 @@ namespace TableModelUtils
   /***************************************************************************/
 
   int SelectedRow(
-      QTableView* table
-      )
+    const QTableView& table
+  )
   {
     int row = -1;
-    QModelIndexList selection = table->selectionModel()->selectedRows();
-    for (auto&& s : selection) {
+    QModelIndexList selection = table.selectionModel()->selectedRows();
+    for (auto const& s : selection) {
       row = s.row();
     }
     return row;
@@ -49,23 +48,23 @@ namespace TableModelUtils
   /***************************************************************************/
 
   void DeleteRow(
-      QTableView* table,
-      QSqlRelationalTableModel* model
-      )
+    QTableView& table,
+    QSqlRelationalTableModel& model
+  )
   {
-    model->removeRow(SelectedRow(table), QModelIndex());
+    model.removeRow(SelectedRow(table), QModelIndex());
     PopulateModel(model);
-    table->setCurrentIndex(model->index(0, 0));
+    table.setCurrentIndex(model.index(0, 0));
   }
 
   /***************************************************************************/
 
   QDataWidgetMapper* SetupModel(
-      QWidget* parrent,
-      QTableView* table,
-      QSqlRelationalTableModel* model,
-      const QString& tableName
-      )
+    QWidget* parrent,
+    QTableView* table,
+    QSqlRelationalTableModel* model,
+    const QString& tableName
+  )
   {
     model->setEditStrategy(QSqlTableModel::OnFieldChange);
     model->setTable(tableName);
@@ -76,7 +75,7 @@ namespace TableModelUtils
 
     auto mapper = new QDataWidgetMapper(parrent);
     mapper->setModel(model);
-    QObject::connect(table->selectionModel(), SIGNAL(currentRowChanged(QModelIndex,QModelIndex)), mapper, SLOT(setCurrentModelIndex(QModelIndex)));
+    QObject::connect(table->selectionModel(), SIGNAL(currentRowChanged(QModelIndex, QModelIndex)), mapper, SLOT(setCurrentModelIndex(QModelIndex)));
     table->setCurrentIndex(model->index(0, 0));
 
     return mapper;
@@ -85,18 +84,18 @@ namespace TableModelUtils
   /***************************************************************************/
 
   void HideColumns(
-      QTableView* table,
-      QSqlRelationalTableModel* model,
-      const QStringList& toHide
-      )
+    QTableView& table,
+    const QSqlRelationalTableModel& model,
+    const QStringList& toHide
+  )
   {
     for (auto&& column : toHide) {
-      table->setColumnHidden(model->fieldIndex(column), true);
+      table.setColumnHidden(model.fieldIndex(column), true);
     }
   }
 
   /***************************************************************************/
 
-  }
+}
 
 #endif
