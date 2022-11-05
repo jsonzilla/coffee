@@ -1,27 +1,27 @@
 #include "databasemamager.h"
 
-DatabaseMamager* DatabaseMamager::instance = nullptr;
+DatabaseManager* DatabaseManager::instance = nullptr;
 
 /***************************************************************************/
 
-DatabaseMamager* DatabaseMamager::GetInstance()
+DatabaseManager* DatabaseManager::GetInstance()
 {
   if (!instance) {
-    instance = new DatabaseMamager();
+    instance = new DatabaseManager();
   }
   return instance;
 }
 
 /***************************************************************************/
 
-DatabaseMamager::DatabaseMamager()
+DatabaseManager::DatabaseManager()
 {
   SetupDb();
 }
 
 /***************************************************************************/
 
-void DatabaseMamager::AddBrew(
+void DatabaseManager::AddBrew(
   QSqlQuery& q,
   const QString& name,
   const QVariant& methodId,
@@ -83,12 +83,12 @@ void DatabaseMamager::AddBrew(
 
 /***************************************************************************/
 
-QVariant DatabaseMamager::AddGround(
+QVariant DatabaseManager::AddGround(
   QSqlQuery& q,
   const QString& name,
   int origin,
   int roast,
-  const QDate& dateroast
+  const QDate& dateRoast
 )
 {
   q.prepare(QLatin1String("insert into grounds("
@@ -100,14 +100,14 @@ QVariant DatabaseMamager::AddGround(
   q.addBindValue(name);
   q.addBindValue(origin);
   q.addBindValue(roast);
-  q.addBindValue(dateroast);
+  q.addBindValue(dateRoast);
   q.exec();
   return q.lastInsertId();
 }
 
 /***************************************************************************/
 
-QVariant DatabaseMamager::AddMethod(
+QVariant DatabaseManager::AddMethod(
   QSqlQuery& q,
   const QString& name,
   const QString& variant
@@ -126,10 +126,9 @@ QVariant DatabaseMamager::AddMethod(
 
 /***************************************************************************/
 
-QSqlError DatabaseMamager::SetupDb()
+QSqlError DatabaseManager::SetupDb()
 {
   auto db = QSqlDatabase::addDatabase("QSQLITE");
-  //db.setDatabaseName(":memory:"); //HIRO change to another name save to disk
   db.setDatabaseName("coffee.db");
 
   if (!db.open()) {
@@ -150,7 +149,7 @@ QSqlError DatabaseMamager::SetupDb()
 
 /***************************************************************************/
 
-QSqlError DatabaseMamager::CreateTables()
+QSqlError DatabaseManager::CreateTables()
 {
   QSqlQuery q;
   if (!q.exec(QLatin1String("create table brews("
@@ -196,7 +195,7 @@ QSqlError DatabaseMamager::CreateTables()
 
 /***************************************************************************/
 
-QSqlError DatabaseMamager::CreateDefaultData()
+QSqlError DatabaseManager::CreateDefaultData()
 {
   QSqlQuery q;
   AddMethod(q, QLatin1String("Pressca"), QLatin1String("French Press"));
@@ -217,7 +216,7 @@ QSqlError DatabaseMamager::CreateDefaultData()
 
 /***************************************************************************/
 
-QSqlError DatabaseMamager::CreateNewGround()
+QSqlError DatabaseManager::CreateNewGround()
 {
   QSqlQuery q;
   AddGround(q, "", 1, 1, QDate::currentDate());
@@ -227,7 +226,7 @@ QSqlError DatabaseMamager::CreateNewGround()
 
 /***************************************************************************/
 
-QSqlError DatabaseMamager::CreateNewMethod()
+QSqlError DatabaseManager::CreateNewMethod()
 {
   QSqlQuery q;
   AddMethod(q, "", "");
@@ -237,7 +236,7 @@ QSqlError DatabaseMamager::CreateNewMethod()
 
 /***************************************************************************/
 
-QSqlError DatabaseMamager::CreateNewBrew()
+QSqlError DatabaseManager::CreateNewBrew()
 {
   QSqlQuery m(QLatin1String("select id from methods"));
   m.last();

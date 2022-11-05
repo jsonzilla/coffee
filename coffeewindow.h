@@ -7,7 +7,7 @@
 #include "ui_coffeewindow.h"
 
 /***************************************************************************/
-class DatabaseMamager;
+class DatabaseManager;
 class QDataWidgetMapper;
 class QSqlRelationalTableModel;
 /***************************************************************************/
@@ -36,7 +36,7 @@ private:
   QSqlRelationalTableModel* brewModel = nullptr;
   QSqlRelationalTableModel* groundModel = nullptr;
   QSqlRelationalTableModel* methodModel = nullptr;
-  DatabaseMamager* db = nullptr;
+  DatabaseManager* db = nullptr;
   int methodIdx;
   int groundIdx;
   int lastBrewIndex = 0;

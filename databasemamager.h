@@ -5,18 +5,18 @@
 
 /***************************************************************************/
 
-class DatabaseMamager
+class DatabaseManager
 {
 public:
   QSqlError CreateNewGround();
   QSqlError CreateNewMethod();
   QSqlError CreateNewBrew();
 
-  static DatabaseMamager* GetInstance();
+  static DatabaseManager* GetInstance();
 
 private:
-  DatabaseMamager();
-  DatabaseMamager(const DatabaseMamager&);
+  DatabaseManager();
+  DatabaseManager(const DatabaseManager&);
 
   QSqlError SetupDb();
   QSqlError CreateTables();
@@ -58,7 +58,7 @@ private:
     const QString& variant
   );
 
-  static DatabaseMamager* instance;
+  static DatabaseManager* instance;
 };
 
 /***************************************************************************/

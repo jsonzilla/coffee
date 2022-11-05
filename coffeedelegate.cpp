@@ -24,8 +24,7 @@ void CoffeeDelegate::paint(
     opt.rect.adjust(0, 0, -1, -1); // since we draw the grid ourselves
     QSqlRelationalDelegate::paint(painter, opt, index);
   }
-  else {
-    const QAbstractItemModel* model = index.model();
+  else if (const QAbstractItemModel* model = index.model()) {
     auto currentActiveState = (option.state & QStyle::State_Active) ? QPalette::Normal : QPalette::Inactive;
     QPalette::ColorGroup cg = (option.state & QStyle::State_Enabled) ? currentActiveState : QPalette::Disabled;
 

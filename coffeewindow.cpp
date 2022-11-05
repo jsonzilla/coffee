@@ -9,7 +9,7 @@
 
 CoffeeWindow::CoffeeWindow()
 {
-  db = DatabaseMamager::GetInstance();
+  db = DatabaseManager::GetInstance();
   ui.setupUi(this);
 
   CreateBrewModel();
@@ -114,9 +114,6 @@ void CoffeeWindow::MapBrewForm(
   mapper->addMapping(ui.spinAftertaste, brewModel->fieldIndex("aftertaste"));
   mapper->addMapping(ui.sliderAftertaste, brewModel->fieldIndex("aftertaste"));
   mapper->addMapping(ui.ratioEdit, brewModel->fieldIndex("ratio"));
-
-  //connect button to tab timer
-  connect(ui.timerButton, &QPushButton::clicked, [this]() {ui.mainTabs->setCurrentIndex(3); });
 }
 
 /***************************************************************************/
