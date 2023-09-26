@@ -21,7 +21,7 @@ jobs:
           version: '6.5.2'
           host: 'windows'
           target: 'desktop'
-          arch: 'win64_msvc2019_arm64'
+          arch: 'win64_msvc2019_64'
       - name: Generate build files
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
       - name: Build
