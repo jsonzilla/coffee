@@ -27,9 +27,9 @@ jobs:
       - name: Run windeployqt
         run: ..\Qt\6.5.2\msvc2019_64\bin\windeployqt.exe build\Release\coffee.exe
       - name: Zip
-        run: 7z a -tzip -mx=9 -mfb=258 -mpass=15 -r coffee.7z build\Release\
+        run: 7z a -tzip -mx=9 -mfb=258 -mpass=15 -r coffee.zip build\Release\
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: coffee.7z
+          files: coffee.zip
 
