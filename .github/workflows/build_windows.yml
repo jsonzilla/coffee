@@ -27,9 +27,9 @@ jobs:
       - name: Build
         run: cmake --build build --config Release
       - name: Run windeployqt
-        run: ../Qt/6.5.2/msvc2019_64/binwindeployqt.exe build/Release/coffee.exe
+        run: ..\Qt\6.5.2\msvc2019_64\binwindeployqt.exe build\Release\coffee.exe
       - name: Zip
-        run: 7z a coffee.zip build/Release/coffee.exe
+        run: 7z a coffee.zip build\Release\coffee.exe
       - name: Upload
         uses: actions/upload-artifact@v2
         with:
