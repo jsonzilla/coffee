@@ -15,9 +15,8 @@ A simple desktop Qt app to make notes
 ## Build instructions
 - Clone the repo
 ```bash
-mkdir build
-cd build
-cmake -G "Visual Studio 17 2022" -A x64 ..
+cmake -S . -B build
+cmake --build build
 ```
 
 ## License GPLv2
