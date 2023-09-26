@@ -13,6 +13,7 @@ jobs:
   build:
       runs-on: windows-2019
       steps:
+      - uses: actions/checkout@v3
       - name: Install Qt
         uses: jurplel/install-qt-action@v3
         with:
@@ -22,7 +23,7 @@ jobs:
           target: 'desktop'
           arch: 'win64_msvc2019_arm64'
       - name: Generate build files
-        run: cmake -S . -B build
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
       - name: Build
-        run: cmake --build build
+        run: cmake --build build --config Release
 
