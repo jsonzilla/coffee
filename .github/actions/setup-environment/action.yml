@@ -1,0 +1,13 @@
+name: Set up environment
+inputs:
+  arch:
+    description: Architecture
+    required: true
+runs:
+  using: composite
+  steps:
+  - run: ${GITHUB_ACTION_PATH}/setup-environment.sh
+    shell: bash
+    env:
+      RUNNER_OS: ${{runner.os}}
+      INPUT_ARCH: ${{inputs.arch}}

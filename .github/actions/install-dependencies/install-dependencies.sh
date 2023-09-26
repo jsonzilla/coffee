@@ -1,0 +1,51 @@
+#!/usr/bin/env bash
+
+setup_linux() {
+  # Because of how bare-bones our docker image is
+  echo "::group::Install prerequisites"
+  apt-get -yq install software-properties-common
+  echo "::endgroup::"
+
+  echo "::group::Add APT sources"
+  for ppa in ppa:ubuntu-toolchain-r/test ppa:ubuntu-sdk-team/ppa \
+             ppa:git-core/ppa; do
+    apt-add-repository -y "${ppa}"
+  done
+  if [ "${INPUT_QT}" -eq 5 ]; then
+    apt-add-repository -y ppa:beineri/opt-qt-5.15.2-xenial
+  fi
+  echo "::endgroup::"
+
+  echo "::group::Fetch APT updates"
+  apt-get update -yq
+  echo "::endgroup::"
+
+  echo "::group::Install APT packages"
+  if [ "${INPUT_QT}" -eq 5 ]; then
+    apt-get install -yq --no-install-suggests --no-install-recommends \
+      build-essential qt515tools qt515base qt515multimedia qt515svg \
+      qt515wayland
+  else
+    apt-get install -yq --no-install-suggests --no-install-recommends \
+      build-essential qt6-l10n-tools qt6-base-dev qt6-multimedia-dev \
+      libqt6svg6-dev qt6-wayland-dev
+  fi
+  echo "::endgroup::"
+}
+
+setup_macos() {
+  echo "::group::Update Homebrew"
+  brew update
+  echo "::endgroup::"
+  echo "::group::Install Homebrew packages"
+  brew install libarchive qt@${INPUT_QT}
+  brew link qt@${INPUT_QT} --force
+  echo "/usr/local/opt/libarchive/bin" >> "${GITHUB_PATH}"
+  echo "::endgroup::"
+}
+
+setup_windows() {
+  : # Nothing to do here
+}
+
+"setup_$(echo "${RUNNER_OS}" | tr '[A-Z]' '[a-z]')"
