@@ -26,12 +26,11 @@ jobs:
         run: cmake --build build --config Release
       - name: Run windeployqt
         run: ..\Qt\6.5.2\msvc2019_64\bin\windeployqt.exe build\Release\coffee.exe
-      - name: Zip
-        run: 7z a coffee.zip build\Release\coffee.exe
-      - name: Upload
-        uses: actions/upload-artifact@v2
+      - name: Zip &z ultra
+        run: 7z a -tzip -mx=9 -mfb=258 -mpass=15 -r coffee.7z build\Release\
+      - name: Release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
         with:
-          name: coffee
-          path: coffee.zip
-
+          files: coffee.7z
 
