@@ -1,20 +1,8 @@
-name: Build Windows
+name: Release Windows
 
 on:
-  push:
-    branches: [ "master" ]
-    paths-ignore:
-      - '.github/**'
-      - '**.md'
-      - '**.sh'
-      - '**.json'
-  pull_request:
-    branches: [ "master" ]
-    paths-ignore:
-      - '.github/**'
-      - '**.md'
-      - '**.sh'
-      - '**.json'
+  release:
+    types: [created]
 
 env:
   BUILD_TYPE: Release
@@ -36,3 +24,14 @@ jobs:
         run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
       - name: Build
         run: cmake --build build --config Release
+      - name: Run windeployqt
+        run: ..\Qt\6.5.2\msvc2019_64\bin\windeployqt.exe build\Release\coffee.exe
+      - name: Zip
+        run: 7z a coffee.zip build\Release\coffee.exe
+      - name: Upload
+        uses: actions/upload-artifact@v2
+        with:
+          name: coffee
+          path: coffee.zip
+
+
