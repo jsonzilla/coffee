@@ -21,15 +21,11 @@ jobs:
           target: 'desktop'
           arch: 'win64_msvc2019_64'
       - name: Generate build files
-        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release
+        run: cmake -S . -B build -DCMAKE_BUILD_TYPE=Release -DDEPLOYQT_EXECUTABLE=Run
       - name: Build
         run: cmake --build build --config Release
-      - name: Run windeployqt
-        run: ..\Qt\6.5.2\msvc2019_64\bin\windeployqt.exe build\Release\coffee.exe
-      - name: Zip
-        run: 7z a -tzip -mx=9 -mfb=258 -mpass=15 -r coffee.zip build\Release\
       - name: Release
         uses: softprops/action-gh-release@v1
         with:
-          files: coffee.zip
+          files: *.zip
 
